@@ -1809,7 +1809,7 @@ def get_local_admins(ip,username,password,domain):
 		print colored("[-]Username is missing..",'red')
 		exit(1)
 	else:
-		proc = subprocess.Popen("/usr/bin/pth-winexe -U \""+domain+"\\"+username+"%"+password+"\" --uninstall --system \/\/"+ip+" 'net localgroup administrators' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
+		proc = subprocess.Popen("/usr/bin/pth-winexe -U \'"+domain+"\\"+username+"%"+password+"\' --uninstall --system \/\/"+ip+" 'net localgroup administrators' 2>/dev/null", stdout=subprocess.PIPE,shell=True)	
 		stdout_value = proc.communicate()[0]
 		if username.upper() in stdout_value.upper():
 			LocalAdmin = True
